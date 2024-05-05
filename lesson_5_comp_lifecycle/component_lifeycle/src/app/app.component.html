@@ -1,0 +1,6 @@
+<button (click)="pVal = pVal + 1">Step</button>
+<button (click)="student.given_name = 'Steven'">
+  Change Given Name
+</button>
+<app-my-component [myValue]="pVal" [student]="student">
+</app-my-component>

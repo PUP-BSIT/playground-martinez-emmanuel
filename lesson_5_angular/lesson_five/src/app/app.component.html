@@ -1,0 +1,35 @@
+<!--
+<div [ngClass]="{ active: isActive, inactive: !isActive }">
+  My Username
+</div>
+
+<button (click)="isActive = true" *ngIf="!isActive">Activate</button>
+<button (click)="isActive = false" *ngIf="isActive">Deactivate</button>
+
+-->
+
+<!--
+<div *ngIf="isLoggedIn; else loggedOut">
+  Welcome user!
+</div>
+
+<ng-template #loggedOut>
+  Please login.
+</ng-template>
+-->
+
+<!--
+<ul>
+  <li *ngFor="let student of students">{{ student }}</li>
+</ul>
+-->
+
+<app-field mode="display">
+  <ng-container class="display-mode">
+    <div>Title: {{ title }}</div>
+  </ng-container>
+  <ng-container class="edit-mode">
+    <label>Title: </label>
+    <input [value]="title" />
+  </ng-container>
+</app-field>

@@ -1,0 +1,16 @@
+<!--
+
+<app-child 
+[message]="messageToChild"
+ (greet)="response = $event">
+ </app-child>
+ <p>A Message from child: {{ response }}</p>
+
+ -->
+
+ <app-child
+#child>
+</app-child>
+
+{{ child.toy }}
+<button (click)="child.sayHello()">Say hello</button>
