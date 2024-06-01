@@ -1,0 +1,26 @@
+<p>This is root component</p>
+
+<div class="buttons" style="display: flex; gap: 1vw; margin-bottom: 1vw;">
+<button routerLink="/">Go To Root</button>
+
+<button routerLink="/first" [queryParams]="{ order: 'asc', page: 1 }">
+  Go To First With Query Params
+</button>
+
+<button (click)="onButton1Click()">
+  Go To First With Query Params using Router Navigate
+  </button>
+
+<button [routerLink]="['/second']">Go To Second</button>
+<button [routerLink]="['/second/', 3]">
+  Go To Second with 3
+  </button>
+  <button [routerLink]="['/second/', 4]">
+  Go To Second with 4
+  </button>
+<!--
+<a href="/third">Link</a>
+<a routerLink="/fourth">Fourth</a> -->
+
+</div>
+<router-outlet></router-outlet>
