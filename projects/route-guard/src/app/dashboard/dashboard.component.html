@@ -1,0 +1,22 @@
+<h1>Dashboard</h1>
+<p>Welcome to the dashboard!</p>
+<p><strong>You can only access this if you are logged in, 
+    thanks to Route Guard
+</strong></p>
+
+
+<div id="post-list" class="post-list">
+    <div id="posts" class="post-item" *ngFor="let post of posts">
+        <h3>{{ post.title }}</h3>
+        <p>{{ post.excerpt }}</p>
+        <button mat-flat-button [routerLink]="['/post', post.id]" 
+            class="custom-btn">Read More</button>
+    </div>
+</div>
+
+<button mat-flat-button (click)="logout()">Logout</button>
+<p><strong><br>By clicking logout, your authentication status changes and 
+    is reflected in the route guard.<br>
+        When you attempt to navigate to the dashboard after logging out,
+        the route guard will intercept the navigation request.
+    </strong></p>
