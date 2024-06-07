@@ -8,13 +8,16 @@ import { TaskService } from '../../services/task.service';
 })
 export class TaskFormComponent {
   taskTitle: string = '';
+  notification: string = '';
 
   constructor(private taskService: TaskService) {}
 
   addTask() {
     if (this.taskTitle.trim()) {
-      this.taskService.addTask(this.taskTitle.trim());
-      this.taskTitle = '';
+      this.taskService.addTaskAndNotify(this.taskTitle.trim()).subscribe(message => {
+        this.notification = message;
+        this.taskTitle = '';
+      });
     }
   }
 }

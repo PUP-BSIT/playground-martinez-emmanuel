@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TaskService } from '../../services/task.service';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-task-list',
@@ -7,10 +9,16 @@ import { TaskService } from '../../services/task.service';
   styleUrls: ['./task-list.component.css']
 })
 export class TaskListComponent implements OnInit {
-  tasks$ = this.taskService.getTasks();
+  tasks$ = this.taskService.getFilteredTasks();
+  totalTasks$ = this.taskService.getTaskCount();
+  completedTasksCount$: Observable<number>;
   searchTerm: string = '';
 
-  constructor(private taskService: TaskService) {}
+  constructor(private taskService: TaskService) {
+    this.completedTasksCount$ = this.taskService.getCompletedTasks().pipe(
+      map(tasks => tasks.length)
+    );
+  }
 
   ngOnInit(): void {}
 
@@ -19,6 +27,6 @@ export class TaskListComponent implements OnInit {
   }
 
   searchTasks() {
-    this.tasks$ = this.taskService.searchTasks(this.searchTerm);
+    this.taskService.searchTasks(this.searchTerm);
   }
 }

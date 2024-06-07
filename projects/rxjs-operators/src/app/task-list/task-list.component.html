@@ -1,12 +1,14 @@
 <mat-card>
     <mat-form-field class="full-width">
-      <input matInput placeholder="Search tasks" [(ngModel)]="searchTerm" 
-        (input)="searchTasks()" />
+      <input matInput placeholder="Search tasks" [(ngModel)]="searchTerm" (input)="searchTasks()" />
     </mat-form-field>
+    <div>
+      <span>Total Tasks: {{ totalTasks$ | async }}</span>
+      <span> | Completed Tasks: {{ completedTasksCount$ | async }}</span>
+    </div>
     <mat-list>
       <mat-list-item *ngFor="let task of tasks$ | async">
-        <mat-checkbox [checked]="task.completed" 
-            (change)="completeTask(task.id)" [disabled]="task.completed">
+        <mat-checkbox [checked]="task.completed" (change)="completeTask(task.id)" [disabled]="task.completed">
           <span [class.completed]="task.completed">{{ task.title }}</span>
         </mat-checkbox>
       </mat-list-item>

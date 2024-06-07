@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { map, filter, debounceTime } from 'rxjs/operators';
+import { BehaviorSubject, Observable, of } from 'rxjs';
+import { map, filter, debounceTime, throttleTime, mergeMap, switchMap, combineLatest } from 'rxjs/operators';
 
 interface Task {
   id: number;
@@ -14,6 +14,7 @@ interface Task {
 export class TaskService {
   private tasksSubject = new BehaviorSubject<Task[]>([]);
   private tasks$ = this.tasksSubject.asObservable();
+  private searchTerms = new BehaviorSubject<string>('');
 
   constructor() {}
 
@@ -25,7 +26,7 @@ export class TaskService {
 
   completeTask(id: number) {
     const tasks = this.tasksSubject.getValue();
-    const updatedTasks = tasks.map(task => 
+    const updatedTasks = tasks.map(task =>
       task.id === id ? { ...task, completed: true } : task
     );
     this.tasksSubject.next(updatedTasks);
@@ -35,14 +36,40 @@ export class TaskService {
     return this.tasks$;
   }
 
-  searchTasks(term: string): Observable<Task[]> {
-    return this.tasks$.pipe(
+  searchTasks(term: string): void {
+    this.searchTerms.next(term);
+  }
+
+  getFilteredTasks(): Observable<Task[]> {
+    return this.searchTerms.pipe(
       debounceTime(300),
-      map(tasks =>
-        tasks.filter(
-          task => task.title.toLowerCase().includes(term.toLowerCase())
-        )
+      combineLatest(this.tasks$),
+      map(([term, tasks]) =>
+        tasks.filter(task => task.title.toLowerCase().includes(term.toLowerCase()))
       )
+    );
+  }
+
+  getTaskCount(): Observable<number> {
+    return this.tasks$.pipe(
+      map(tasks => tasks.length)
+    );
+  }
+
+  getCompletedTasks(): Observable<Task[]> {
+    return this.tasks$.pipe(
+      map(tasks => tasks.filter(task => task.completed))
+    );
+  }
+
+  // Example of using switchMap
+  addTaskAndNotify(title: string): Observable<string> {
+    return of(title).pipe(
+      throttleTime(1000),
+      mergeMap(title => {
+        this.addTask(title);
+        return of(`Task "${title}" added successfully`);
+      })
     );
   }
 }
