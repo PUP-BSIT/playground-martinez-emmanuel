@@ -1,0 +1,12 @@
+.full-width {
+    width: 100%;
+  }
+  
+  mat-card {
+    margin-bottom: 20px;
+  }
+  
+  .completed {
+    text-decoration: line-through;
+  }
+  
