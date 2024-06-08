@@ -3,7 +3,7 @@ import { FormControl } from '@angular/forms';
 import { RepoService } from '../../services/repo.service';
 import { Observable, of } from 'rxjs';
 import { catchError, debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
-import { Repo } from '../../model/repo.model';
+import { Repo } from '../model/repo.model';
 
 @Component({
   selector: 'app-repo-list',

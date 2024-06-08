@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map, retry } from 'rxjs/operators';
-import { Repo, RepoResponse } from '../model/repo.model';
+import { Repo, RepoResponse } from '../app/model/repo.model';
 
 @Injectable({
   providedIn: 'root',
